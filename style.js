@@ -85,3 +85,33 @@ function handleSubmitSignup() {
     return true;
   }
 }
+
+
+
+
+async function apiFetch(){
+  try {
+    let response = await fetch("https://jsonplaceholder.typicode.com/todos");
+    if (!response.ok) {
+      console.error("Due to Technical Error, Data not Loaded");
+      return false;
+    }
+
+    let data = await response.json();
+    let combinedArray = [...data];
+    console.log(combinedArray);
+
+    // Get the result element by id
+    let resultElement = document.getElementById("result");
+
+    // Check if the element exists
+    if (resultElement) {
+      // Update the inner text of the result element
+      resultElement.innerHTML = combinedArray.map((e, i) => `<li>${e.title}</li>`).join("");
+    } else {
+      resultElement.innerText = "Due to Technical Error, Data not Loaded";
+    }
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
